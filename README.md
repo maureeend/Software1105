@@ -1,2 +1,2 @@
 # Software
-Mehdi Lazreg, Carla Vallet, Alexandre Planson and Maureen Drouard
+Carla Vallet, Alexandre Planson and Maureen Drouard
