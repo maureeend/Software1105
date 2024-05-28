@@ -1,5 +1,7 @@
 import unittest
 from Game import Game
+from unittest.mock import patch
+from tkinter import messagebox
 
 class TestGame(unittest.TestCase):
     def test_game_initialization(self):
@@ -38,13 +40,16 @@ class TestGame(unittest.TestCase):
         self.assertEqual(game.board.board[5][3], 1)
 
     def test_disk_placement_solid_column(self):
-        # Test placing disk in a solid column
         game = Game()
-        for i in range(6):
+        
+        # Fill up column 3
+        for _ in range(6):
             game.drop_disc(3)
-        # Attempt to place disk in column 3 (solid)
-        with self.assertRaises(ValueError):
+        
+        # Test placing a disc in a full column
+        with patch.object(messagebox, 'showerror') as mock_showerror:
             game.drop_disc(3)
+            mock_showerror.assert_called_once_with("Invalid Move", "This column is full. Please choose another one.")
 
     def test_victory_condition_vertical_alignment(self):
         # Test victory condition with vertical alignment of 4 discs
@@ -56,7 +61,6 @@ class TestGame(unittest.TestCase):
         # Check if the game declares the first player as the winner
         self.assertTrue(game.check_win(1))
 
-    # Add more test methods as needed
 
 if __name__ == '__main__':
     unittest.main()
